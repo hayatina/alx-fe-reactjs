@@ -1,3 +1,6 @@
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import MainContent from "./components/MainContent";
 import WelcomeMessage from "./components/WelcomeMessage";
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
@@ -29,7 +32,11 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <WelcomeMessage /> {/* Include the WelcomeMessage component here */}
+      {/* Include the WelcomeMessage component here */}
+      <WelcomeMessage />
+      <Footer />
+      <MainContent />
+      <Header />
     </>
   );
 }
