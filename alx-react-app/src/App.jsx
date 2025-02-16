@@ -1,3 +1,4 @@
+import UserProfile from "./components/UserProfile";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import MainContent from "./components/MainContent";
@@ -37,6 +38,11 @@ function App() {
       <Footer />
       <MainContent />
       <Header />
+      <UserProfile
+        name="John Doe"
+        age={30}
+        bio="Web Developer and UI designer."
+      />
     </>
   );
 }
