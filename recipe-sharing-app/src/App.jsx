@@ -1,6 +1,6 @@
 // src/App.jsx
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RecipeList from "./components/RecipeList";
 import AddRecipeForm from "./components/AddRecipeForm";
 import RecipeDetails from "./components/RecipeDetails";
@@ -12,10 +12,10 @@ function App() {
       <div className="App">
         <h1>Recipe Sharing App</h1>
         <AddRecipeForm />
-        <Switch>
-          <Route path="/" exact component={RecipeList} />
-          <Route path="/recipe/:id" component={RecipeDetailsWrapper} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<RecipeList />} />
+          <Route path="/recipe/:id" element={<RecipeDetailsWrapper />} />
+        </Routes>
       </div>
     </Router>
   );
@@ -23,8 +23,7 @@ function App() {
 
 // Wrapper to extract recipeId from URL params and pass it to RecipeDetails
 const RecipeDetailsWrapper = (props) => {
-  const { match } = props;
-  const { id } = match.params;
+  const { id } = props.match.params;
   return <RecipeDetails recipeId={id} />;
 };
 
