@@ -1,10 +1,10 @@
 function UserProfile() {
   return (
-    <div className="user-profile bg-gray-100 p-8 ms:max-w-sm md:max-w-xs mx-auto, my-20 rounded-lg shadow-lg sm:p-4 md:p-8 ">
+    <div className="user-profile bg-gray-100 p-8 sm:max-w-sm md:max-w-md  mx-auto, my-20 rounded-lg shadow-lg sm:p-4 md:p-8 ">
       <img
         src="https://via.placeholder.com/150"
         alt="User"
-        className="rounded-full 24 36 mx-auto sm: w-24 sm:h-24 md:w-36 md:h-36"
+        className="rounded-full 24 36 mx-auto sm:w-24 sm:h-24 md:w-36 md:h-36"
       />
       <h1 className="text-xl text-blue-800 my-4 sm:text-lg md:text-xl">
         John Doe
