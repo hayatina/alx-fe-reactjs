@@ -1,22 +1,27 @@
 import React, { useState } from "react";
 
 const RegistrationForm = () => {
-  // Individual states for each input field
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({}); // To hold error messages
 
-  // Form submission handler
+  const validate = () => {
+    const newErrors = {};
+    if (!username) newErrors.username = "Username is required";
+    if (!email) newErrors.email = "Email is required";
+    if (!password) newErrors.password = "Password is required";
+    return newErrors;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Validation to ensure no field is empty
-    if (!username || !email || !password) {
-      alert("All fields are required.");
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors); // Set errors if validation fails
       return;
     }
-
-    // Log the form data
+    setErrors({}); // Clear errors if form is valid
     console.log("Form submitted:", { username, email, password });
   };
 
@@ -32,6 +37,9 @@ const RegistrationForm = () => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
+        {errors.username && (
+          <span style={{ color: "red" }}>{errors.username}</span>
+        )}
       </div>
 
       <div>
@@ -44,6 +52,7 @@ const RegistrationForm = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+        {errors.email && <span style={{ color: "red" }}>{errors.email}</span>}
       </div>
 
       <div>
@@ -56,6 +65,9 @@ const RegistrationForm = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        {errors.password && (
+          <span style={{ color: "red" }}>{errors.password}</span>
+        )}
       </div>
 
       <button type="submit">Register</button>
