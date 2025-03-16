@@ -1,16 +1,17 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import PostsComponent from './components/PostsComponent'
+import React from "react";
+import { QueryClient, QueryClientProvider } from "react-query"; // Import necessary React Query components
+import PostsComponent from "./PostsComponent"; // Import the PostsComponent that will use React Query
+
+// Create a new instance of QueryClient
+const queryClient = new QueryClient();
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-    </>
-  )
+    // Wrap the entire app with QueryClientProvider to provide React Query functionality
+    <QueryClientProvider client={queryClient}>
+      <PostsComponent />
+    </QueryClientProvider>
+  );
 }
 
-export default App
+export default App;
