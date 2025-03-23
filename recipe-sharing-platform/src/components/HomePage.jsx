@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from "react";
-import data from "../data.json";
 import { Link } from "react-router-dom";
+import data from "../data.json";
 
 const HomePage = () => {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    setRecipes(data); // Load data.json
+    setRecipes(data);
   }, []);
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <h1 className="text-center text-4xl font-bold m-8 p-5 text-gray-800">
-        Recipe List
-      </h1>
+      <div className="flex justify-between items-center p-6 bg-blue-500 text-white">
+        <h1 className="text-3xl font-bold">Recipe List</h1>
+        <Link
+          to="/add-recipe"
+          className="bg-white text-blue-500 py-2 px-4 rounded shadow hover:bg-gray-100"
+        >
+          Add Recipe
+        </Link>
+      </div>
       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
         {recipes.map((recipe) => (
           <li
