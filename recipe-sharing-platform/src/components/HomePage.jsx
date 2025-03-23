@@ -7,21 +7,30 @@ const HomePage = () => {
   useEffect(() => {
     // Load the data directly from the imported JSON
     setRecipes(data);
-  }, []); // Runs only once when the component mounts
+  }, []);
 
   return (
-    <div>
-      <h1>Recipe List</h1>
-      <ul>
+    <div className="min-h-screen bg-gray-100">
+      <h1 className="text-center text-4xl font-bold m-8 p-5 text-gray-800">
+        Recipe List
+      </h1>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
         {recipes.map((recipe) => (
-          <li key={recipe.id}>
-            <h2>{recipe.title}</h2>
-            <p>{recipe.summary}</p>
+          <li
+            key={recipe.id}
+            className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-lg"
+          >
             <img
               src={recipe.image}
               alt={recipe.title}
-              style={{ width: "150px", height: "150px" }}
+              className="w-full h-40 object-cover"
             />
+            <div className="p-4">
+              <h2 className="text-lg font-semibold text-gray-700">
+                {recipe.title}
+              </h2>
+              <p className="text-gray-600 mt-2">{recipe.summary}</p>
+            </div>
           </li>
         ))}
       </ul>
