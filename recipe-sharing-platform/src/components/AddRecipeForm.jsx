@@ -5,35 +5,56 @@ const AddRecipeForm = ({ addRecipe }) => {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [steps, setSteps] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({}); // State for tracking validation errors
   const navigate = useNavigate();
+
+  // Validation function
+  const validate = () => {
+    const newErrors = {};
+
+    if (!title.trim()) {
+      newErrors.title = "Title is required.";
+    }
+    if (!ingredients.trim()) {
+      newErrors.ingredients = "Ingredients are required.";
+    } else if (ingredients.split(",").length < 2) {
+      newErrors.ingredients =
+        "Please include at least two ingredients (comma-separated).";
+    }
+    if (!steps.trim()) {
+      newErrors.steps = "Steps are required.";
+    } else if (steps.split(".").length < 2) {
+      newErrors.steps = "Please include at least two steps (dot-separated).";
+    }
+
+    return newErrors;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation
-    if (!title || !ingredients || !steps) {
-      setError("All fields are required.");
+    // Validate the form
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
-    if (ingredients.split(",").length < 2) {
-      setError("Please include at least two ingredients.");
-      return;
-    }
+    // Clear errors if validation passes
+    setErrors({});
 
     // Create new recipe object
     const newRecipe = {
-      id: Date.now(), // Generate a unique ID
+      id: Date.now(),
       title,
       ingredients: ingredients.split(",").map((item) => item.trim()),
-      steps: steps.split(".").map((item) => item.trim()), // Steps separated by dots
+      steps: steps.split(".").map((item) => item.trim()),
       summary: "Newly added recipe",
       image: "https://via.placeholder.com/150", // Placeholder image
     };
 
-    addRecipe(newRecipe); // Call the addRecipe function from props
-    navigate("/"); // Redirect to the Home Page
+    addRecipe(newRecipe); // Add the recipe using the function from props
+    navigate("/"); // Redirect to Home Page
   };
 
   return (
@@ -43,7 +64,10 @@ const AddRecipeForm = ({ addRecipe }) => {
         className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg"
       >
         <h1 className="text-2xl font-bold mb-4 text-gray-800">Add a Recipe</h1>
-        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+        {errors.general && (
+          <p className="text-red-500 text-sm mb-4">{errors.general}</p>
+        )}
+
         <label className="block mb-2 text-gray-700">
           Recipe Title
           <input
@@ -53,7 +77,11 @@ const AddRecipeForm = ({ addRecipe }) => {
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter the recipe title"
           />
+          {errors.title && (
+            <p className="text-red-500 text-sm mt-1">{errors.title}</p>
+          )}
         </label>
+
         <label className="block mb-2 text-gray-700">
           Ingredients (comma-separated)
           <textarea
@@ -63,7 +91,11 @@ const AddRecipeForm = ({ addRecipe }) => {
             placeholder="e.g., eggs, flour, sugar"
             rows={3}
           ></textarea>
+          {errors.ingredients && (
+            <p className="text-red-500 text-sm mt-1">{errors.ingredients}</p>
+          )}
         </label>
+
         <label className="block mb-2 text-gray-700">
           Cooking Steps (dot-separated)
           <textarea
@@ -73,7 +105,11 @@ const AddRecipeForm = ({ addRecipe }) => {
             placeholder="e.g., Preheat oven. Mix ingredients. Bake for 20 minutes."
             rows={5}
           ></textarea>
+          {errors.steps && (
+            <p className="text-red-500 text-sm mt-1">{errors.steps}</p>
+          )}
         </label>
+
         <button
           type="submit"
           className="w-full bg-blue-500 text-white py-2 px-4 rounded mt-4 hover:bg-blue-600"
