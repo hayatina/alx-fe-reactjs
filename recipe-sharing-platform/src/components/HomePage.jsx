@@ -1,14 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import data from "../data.json";
 
-const HomePage = () => {
-  const [recipes, setRecipes] = useState([]);
-
-  useEffect(() => {
-    setRecipes(data);
-  }, []);
-
+const HomePage = ({ recipes }) => {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="flex justify-between items-center p-6 bg-blue-500 text-white">

@@ -1,36 +1,39 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const AddRecipeForm = () => {
+const AddRecipeForm = ({ addRecipe }) => {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
-  const [instructions, setInstructions] = useState("");
+  const [steps, setSteps] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Navigate after form submission
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Validation
-    if (!title || !ingredients || !instructions) {
+    if (!title || !ingredients || !steps) {
       setError("All fields are required.");
       return;
     }
+
     if (ingredients.split(",").length < 2) {
       setError("Please include at least two ingredients.");
       return;
     }
 
-    setError(""); // Clear any previous error
-    console.log({
+    // Create new recipe object
+    const newRecipe = {
+      id: Date.now(), // Generate a unique ID
       title,
       ingredients: ingredients.split(",").map((item) => item.trim()),
-      instructions: instructions.split(".").map((item) => item.trim()),
-    });
+      steps: steps.split(".").map((item) => item.trim()), // Steps separated by dots
+      summary: "Newly added recipe",
+      image: "https://via.placeholder.com/150", // Placeholder image
+    };
 
-    // Redirect to Home Page after submission
-    alert("Recipe added successfully!");
-    navigate("/");
+    addRecipe(newRecipe); // Call the addRecipe function from props
+    navigate("/"); // Redirect to the Home Page
   };
 
   return (
@@ -62,12 +65,12 @@ const AddRecipeForm = () => {
           ></textarea>
         </label>
         <label className="block mb-2 text-gray-700">
-          Preparation Steps (dot-separated)
+          Cooking Steps (dot-separated)
           <textarea
             className="w-full p-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring focus:ring-blue-300"
-            value={instructions}
-            onChange={(e) => setInstructions(e.target.value)}
-            placeholder="e.g., Mix the ingredients. Bake at 180°C. Let it cool."
+            value={steps}
+            onChange={(e) => setSteps(e.target.value)}
+            placeholder="e.g., Preheat oven. Mix ingredients. Bake for 20 minutes."
             rows={5}
           ></textarea>
         </label>
